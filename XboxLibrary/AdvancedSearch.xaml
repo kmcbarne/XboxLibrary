@@ -1,0 +1,143 @@
+﻿<Page
+    x:Class="XboxLibrary.AdvancedSearch"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:XboxLibrary"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <ScrollViewer>
+        <StackPanel VerticalAlignment="Stretch" Margin="25">
+            <controls:Expander Header="Title" Margin="5" LostFocus="Expander_LostFocus">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="4*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBox Grid.Column="1" Grid.Row="0" x:Name="titleFieldA" HorizontalAlignment="Stretch" Margin="5" MinWidth="300" />
+                    <ComboBox Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5">
+                        <ComboBoxItem Content="AND" />
+                        <ComboBoxItem Content="OR" />
+                        <ComboBoxItem Content="NOT" />
+                    </ComboBox>
+                    <TextBox Grid.Column="1" Grid.Row="1" x:Name="titleFieldB" HorizontalAlignment="Left" Margin="5" MinWidth="300" />
+                    <ComboBox Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" Margin="5">
+                        <ComboBoxItem Content="AND" />
+                        <ComboBoxItem Content="OR" />
+                        <ComboBoxItem Content="NOT" />
+                    </ComboBox>
+                    <TextBox Grid.Column="1" Grid.Row="2" x:Name="titleFieldC" HorizontalAlignment="Left" Margin="5" MinWidth="300" />
+                    <ComboBox Grid.Column="0" Grid.Row="3" HorizontalAlignment="Stretch" Margin="5">
+                        <ComboBoxItem Content="AND" />
+                        <ComboBoxItem Content="OR" />
+                        <ComboBoxItem Content="NOT" />
+                    </ComboBox>
+                    <TextBox Grid.Column="1" Grid.Row="3" x:Name="titleFieldD" HorizontalAlignment="Left" Margin="5" MinWidth="300" />
+                </Grid>
+            </controls:Expander>
+            <controls:Expander Header="Console" Margin="5" LostFocus="Expander_LostFocus">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <CheckBox Grid.Row="0" x:Name="consoleWin" Content="Windows" Margin="5" />
+                    <CheckBox Grid.Row="1" x:Name="consoleOri" Content="Xbox" Margin="5" />
+                    <CheckBox Grid.Row="2" x:Name="console360" Content="Xbox 360" Margin="5" />
+                    <CheckBox Grid.Row="3" x:Name="consoleOne" Content="Xbox One" Margin="5" />
+                    <CheckBox Grid.Row="4" x:Name="consoleSX" Content="Xbox Series S|X" Margin="5" />
+                </Grid>
+            </controls:Expander>
+            <controls:Expander Header="GamePass" Margin="5" LostFocus="Expander_LostFocus">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <CheckBox Grid.Row="0" x:Name="gamePassAvailable" Content="Available" Margin="5" />
+                    <CheckBox Grid.Row="1" x:Name="gamePassNA" Content="Not Applicable" Margin="5" />
+                    <CheckBox Grid.Row="2" x:Name="gamePassRemove" Content="Removed" Margin="5" />
+                    <CheckBox Grid.Row="3" x:Name="gamePassUnk" Content="Unknown" Margin="5" />
+                </Grid>
+            </controls:Expander>
+            <controls:Expander Header="Format" Margin="5" LostFocus="Expander_LostFocus">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <CheckBox Grid.Row="0" x:Name="formatDigital" Content="Digital" Margin="5" />
+                    <CheckBox Grid.Row="1" x:Name="formatPhysical" Content="Physical" Margin="5" />
+                </Grid>
+            </controls:Expander>
+            <controls:Expander Header="Completion" Margin="5" LostFocus="Expander_LostFocus">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <CheckBox Grid.Row="0" x:Name="completionYes" Content="Yes" Margin="5" />
+                    <CheckBox Grid.Row="1" x:Name="completionNo" Content="No" Margin="5" />
+                    <CheckBox Grid.Row="2" x:Name="completionFieldC" Content="Unknown" Margin="5" />
+                </Grid>
+            </controls:Expander>
+            <controls:Expander Header="Achievements" Margin="5" LostFocus="Expander_LostFocus">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <CheckBox Grid.Column="0" Grid.Row="0" x:Name="achievementsYes" Content="100% Achievements" Margin="5" />
+                    <CheckBox Grid.Column="0" Grid.Row="1" x:Name="achievementsNo" Content="0% Achievements" Margin="5" />
+                    <Slider Grid.Column="0" Grid.Row="2" x:Name="achievementsScore" Header="Score Complete" Minimum="0" Maximum="1000" TickFrequency="10" TickPlacement="Inline" Margin="5" />
+                    <Slider Grid.Column="0" Grid.Row="3" x:Name="achievementsFieldD" Minimum="0" Maximum="100" TickFrequency="5" TickPlacement="Inline"  Header="Percent Complete" Margin="5" />
+                </Grid>
+            </controls:Expander>
+            <controls:Expander Header="Installation" Margin="5" LostFocus="Expander_LostFocus">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <CheckBox Grid.Row="0" x:Name="installationYes" Content="Installed" Margin="5" />
+                    <CheckBox Grid.Row="1" x:Name="installationNo" Content="Not Installed" Margin="5" />
+                </Grid>
+            </controls:Expander>
+            <controls:Expander Header="DateTime" Margin="5" LostFocus="Expander_LostFocus">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <DatePicker Grid.Row="0" x:Name="dateStart" Header="Start Range" Margin="5" />
+                    <DatePicker Grid.Row="1" x:Name="dateEnd" Header="End Range" Margin="5" />
+                </Grid>
+            </controls:Expander>
+            <Button Content="Search" HorizontalAlignment="Center" Tapped="advancedSearchButton_Tapped" />
+        </StackPanel>
+    </ScrollViewer>
+</Page>

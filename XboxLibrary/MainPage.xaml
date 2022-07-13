@@ -1,0 +1,57 @@
+﻿<Page
+    x:Class="XboxLibrary.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:XboxLibrary"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    CornerRadius="30"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <NavigationView PaneDisplayMode="Left" ItemInvoked="NavigationView_ItemInvoked" IsSettingsVisible="False">
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="Home" x:Name="homeSelect" Icon="Home" />
+            <NavigationViewItem Content="Library" x:Name="librarySelect" Icon="Library" />
+            <NavigationViewItem Content="Add Game" x:Name="addGameSelect" Icon="Add" />
+            <NavigationViewItem Content="Edit Game" x:Name="editSingleSelect" Icon="Edit" />
+            <NavigationViewItem Content="Advanced Search" x:Name="advancedSearchSelect">
+                <NavigationViewItem.Icon>
+                    <PathIcon Data="M20.482002,21.756989C20.482002,21.756989,29.086008,23.806,29.907999,32L0,32C-1.5275327E-07,32,2.4559943,22.984985,9.8299896,22.167999L11.832005,30.720001 18.077002,30.667999z M4.2760026,4.5419922C4.4790055,4.5409851,4.6000077,4.9309998,4.6000077,4.9309998L5.1659867,13.623993C4.1969926,15.167999 2.8549813,13.658997 2.8549813,13.658997 2.8549813,13.658997 3.5589916,5.6119995 3.9519972,4.8589783 4.0740062,4.6229858 4.1839916,4.5419922 4.2760026,4.5419922z M15.648993,0L24.999003,2.79599C25.423014,2.9689941,25.198008,3.2329712,25.198008,3.2329712L19.504004,4.7129822 19.504004,5.3629761C19.535011,5.5069885 19.401983,5.5929871 19.294989,5.6409912 21.526985,7.117981 22.996987,9.6489868 22.996987,12.526978 22.996987,17.086975 19.299994,20.783997 14.739995,20.783997 10.185001,20.783997 6.4880087,17.086975 6.4880087,12.526978 6.4880087,9.6419983 7.9689967,7.1069946 10.211003,5.6299744 9.9700042,5.519989 9.9400055,5.3629761 9.9400055,5.3629761L9.9400055,4.34198 4.3989884,2.6819763C4.0109874,2.5269775,4.4039933,2.4679871,4.4039933,2.4679871z" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Content="Import" x:Name="importSelect">
+                <NavigationViewItem.Icon>                    
+                    <PathIcon Data="M 16.499052, 5.7330076 L 9.999999, 11.951012 16.499052, 18.724008 17.945958, 17.342968 13.904752, 12.983028 32.000912, 12.983028 32.000912, 10.983028 13.904752, 10.983028 17.945958, 7.1780118 z
+                              M 0,0 L 21.999999,0 21.999999,8 20,8 20,1.9999998 2,1.9999998 2,21 20,21 20,15 21.999999,15 21.999999,23 0,23 z" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Content="Export" x:Name="exportSelect">
+                <NavigationViewItem.Icon>
+                    <PathIcon Data="M25.501859,5.7330076L32.000912,11.951012 25.534818,18.724008 24.087912,17.342968 28.250595,12.983028 9.999999,12.983028 9.999999,10.983028 28.096159,10.983028 24.118796,7.1780118z 
+                              M0,0L21.999999,0 21.999999,8 20,8 20,1.9999998 2,1.9999998 2,21 20,21 20,15 21.999999,15 21.999999,23 0,23z" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+        </NavigationView.MenuItems>
+        <Frame x:Name="ContentFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <NavigationView.PaneFooter>
+            <StackPanel>
+                <Border x:Name="countBox" BorderThickness="1" BorderBrush="White" Margin="5" Padding="10" CornerRadius="10" DataContext="Games">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Name="statusMessage" Text="Please save before closing..." />
+                    </Grid>
+                </Border>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <AppBarButton x:Name="openButton" Icon="OpenFile" Click="openButton_Click" />
+                    <AppBarButton x:Name="saveButton" Icon="Save" Click="saveButton_Click" />
+                    <AppBarButton Icon="Find" />
+                    <AppBarButton x:Name="settingsButton" Icon="Setting" Click="settingsButton_Click" />
+                    <AppBarButton Icon="Message" />
+                </StackPanel>
+            </StackPanel>
+        </NavigationView.PaneFooter>
+    </NavigationView>
+</Page>

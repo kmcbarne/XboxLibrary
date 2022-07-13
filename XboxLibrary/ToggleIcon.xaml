@@ -1,0 +1,42 @@
+﻿<UserControl
+    x:Class="XboxLibrary.ToggleIcon"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:XboxLibrary"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="ToggleIconTemplate" TargetType="CheckBox">
+            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Tapped="Border_Tapped">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <BitmapIcon x:Name="UncheckedState" UriSource="{Binding UncheckedImage }" Opacity="0" ShowAsMonochrome="False" />
+                    <BitmapIcon x:Name="CheckedState" UriSource="{Binding CheckedImage}" Opacity="0" ShowAsMonochrome="False" />
+                </Grid>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CheckStates">
+                        <VisualState x:Name="Checked">
+                            <Storyboard>
+                                <DoubleAnimation To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckedState" />
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Unchecked">                            
+                            <Storyboard>
+                                <DoubleAnimation To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="UncheckedState" />
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Border>
+        </ControlTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <CheckBox Width="32" Height="32" Template="{StaticResource ToggleIconTemplate}" />
+    </Grid>
+</UserControl>

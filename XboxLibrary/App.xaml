@@ -1,0 +1,15 @@
+﻿<Application
+    x:Class="XboxLibrary.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:local="using:XboxLibrary">
+    <Application.Resources>
+        <!-- 'XamlControlsResources' required by Microsoft Control Toolkit to function -->
+        <controls:XamlControlsResources>
+            <controls:XamlControlsResources.MergedDictionaries>
+                <ResourceDictionary Source="XboxLibraryStyles.xaml" />
+            </controls:XamlControlsResources.MergedDictionaries>
+        </controls:XamlControlsResources>
+    </Application.Resources>
+</Application>

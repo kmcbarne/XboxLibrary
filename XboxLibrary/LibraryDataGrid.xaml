@@ -1,0 +1,274 @@
+﻿<Page
+    x:Class="XboxLibrary.LibraryDataGrid"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:XboxLibrary"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
+    xmlns:Controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:Primitives="using:Microsoft.Toolkit.Uwp.UI.Controls.Primitives"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <local:EnumToIntConverter x:Key="enumToIntConverter" />
+        <local:EnumToStringConverter x:Key="enumToStringConverter" />
+        <local:DateToStringConverter x:Key="dateToStringConverter" />
+        <Style TargetType="Controls:DataGridCell" x:Key="CenteredCellStyle">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="Controls:DataGridCell" x:Key="CompletedCheckBoxCellStyle">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="35,0" />
+        </Style>
+        <Style TargetType="Controls:DataGridCell" x:Key="AchievementsCheckBoxCellStyle">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="40,0" />
+        </Style>
+        <Style TargetType="Controls:DataGridCell" x:Key="InstalledCheckBoxCellStyle">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="25,0" />
+        </Style>
+        <Style TargetType="Primitives:DataGridColumnHeader" x:Key="CenteredHeaderStyle">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+        <Style TargetType="Primitives:DataGridColumnHeader" x:Key="TitleHeaderStyle">
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" MaxHeight="40" />
+            <RowDefinition Height="Auto" MaxHeight="60" />
+        </Grid.RowDefinitions>
+        <CommandBar Style="{StaticResource CommandBarStyleOpenDown}" Grid.Row="0"
+                    IsOpen="True"
+                    IsSticky="True"
+                    ClosedDisplayMode="Minimal"
+                    VerticalAlignment="Top">
+            <AppBarElementContainer VerticalAlignment="Center">
+                <AutoSuggestBox x:Name="gameSearch" Width="500" QueryIcon="Find" Margin="10,0" KeyUp="gameSearch_KeyUp" QuerySubmitted="gameSearch_QuerySubmitted" />
+            </AppBarElementContainer>
+            <AppBarElementContainer VerticalAlignment="Center">
+                <TextBox x:Name="searchResultsCount" Margin="10,0" />
+            </AppBarElementContainer>
+            <AppBarElementContainer>
+                <StackPanel x:Name="searchResultControls" Visibility="Collapsed" Orientation="Horizontal" VerticalAlignment="Center" Height="{Binding ElementName=gameSearch, Path=ActualHeight}" Margin="0,20,20,0">
+                    <Button x:Name="prevSearchResult" Content="&lt;" CornerRadius="5,0,0,5" Click="prevSearchResult_Click" />
+                    <AppBarSeparator Width="1" />
+                    <Button x:Name="nextSearchResult" Content="&gt;" CornerRadius="0,5,5,0" Click="nextSearchResult_Click" />
+                </StackPanel>
+            </AppBarElementContainer>
+            <AppBarButton x:Name="jumpToLetter"
+                          Label="Go To Letter"
+                          Click="jumpToLetter_Click">
+                <AppBarButton.Icon>
+                    <PathIcon Data="M 0,0  10,0  10,10 0,10 z M 11,0  21,0  21,10 11,10 z M 22,0  32,0  32,10 22,10 z
+                                    M 0,11 10,11 10,21 0,21 z M 11,11 21,11 21,21 11,21 z M 22,11 32,11 32,21 22,21 z
+                                    M 0,22 10,22 10,32 0,32 z M 11,22 21,22 21,32 11,32 z M 22,22 32,22 32,32 22,32 z" />
+                </AppBarButton.Icon>
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout>
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Grid.Resources>
+                                <Style TargetType="Button">
+                                    <Setter Property="Height" Value="40" />
+                                    <Setter Property="Width" Value="40" />
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                    <Setter Property="Margin" Value="1" />
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Button Content="A" Grid.Column="0" Grid.Row="0" Click="jumpSelection_Click" />
+                            <Button Content="B" Grid.Column="1" Grid.Row="0" Click="jumpSelection_Click" />
+                            <Button Content="C" Grid.Column="2" Grid.Row="0" Click="jumpSelection_Click" />
+                            <Button Content="D" Grid.Column="3" Grid.Row="0" Click="jumpSelection_Click" />
+                            <Button Content="E" Grid.Column="4" Grid.Row="0" Click="jumpSelection_Click" />
+                            <Button Content="F" Grid.Column="0" Grid.Row="1" Click="jumpSelection_Click" />
+                            <Button Content="G" Grid.Column="1" Grid.Row="1" Click="jumpSelection_Click" />
+                            <Button Content="H" Grid.Column="2" Grid.Row="1" Click="jumpSelection_Click" />
+                            <Button Content="I" Grid.Column="3" Grid.Row="1" Click="jumpSelection_Click" />
+                            <Button Content="J" Grid.Column="4" Grid.Row="1" Click="jumpSelection_Click" />
+                            <Button Content="K" Grid.Column="0" Grid.Row="2" Click="jumpSelection_Click" />
+                            <Button Content="L" Grid.Column="1" Grid.Row="2" Click="jumpSelection_Click" />
+                            <Button Content="M" Grid.Column="2" Grid.Row="2" Click="jumpSelection_Click" />
+                            <Button Content="N" Grid.Column="3" Grid.Row="2" Click="jumpSelection_Click" />
+                            <Button Content="O" Grid.Column="4" Grid.Row="2" Click="jumpSelection_Click" />
+                            <Button Content="P" Grid.Column="0" Grid.Row="3" Click="jumpSelection_Click" />
+                            <Button Content="Q" Grid.Column="1" Grid.Row="3" Click="jumpSelection_Click" />
+                            <Button Content="R" Grid.Column="2" Grid.Row="3" Click="jumpSelection_Click" />
+                            <Button Content="S" Grid.Column="3" Grid.Row="3" Click="jumpSelection_Click" />
+                            <Button Content="T" Grid.Column="4" Grid.Row="3" Click="jumpSelection_Click" />
+                            <Button Content="U" Grid.Column="0" Grid.Row="4" Click="jumpSelection_Click" />
+                            <Button Content="V" Grid.Column="1" Grid.Row="4" Click="jumpSelection_Click" />
+                            <Button Content="W" Grid.Column="2" Grid.Row="4" Click="jumpSelection_Click" />
+                            <Button Content="X" Grid.Column="3" Grid.Row="4" Click="jumpSelection_Click" />
+                            <Button Content="Y" Grid.Column="4" Grid.Row="4" Click="jumpSelection_Click" />
+                            <Button Content="Z" Grid.Column="0" Grid.Row="5" Click="jumpSelection_Click" />
+                            <Button Content="#" Grid.Column="1" Grid.Row="5" Click="jumpSelection_Click" />
+                        </Grid>
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+            </AppBarButton>
+            <AppBarButton x:Name="groupByLetter"
+                          Label="Group By Letter"
+                          Click="groupByLetter_Click">
+                <AppBarButton.Icon>
+                    <PathIcon Data="M0.79800415,20.83499L31.203003,20.83499C31.60199,20.83499,32,21.134001,32,21.631987L32,24.223995C32,24.622982,31.700989,25.021999,31.203003,25.021999L0.79800415,25.021999C0.29998779,24.921993,0,24.622982,0,24.223995L0,21.631987C0,21.134001,0.29998779,20.83499,0.79800415,20.83499z M0.79800415,6.3799735L31.203003,6.3799735C31.60199,6.3799735,32,6.6789847,32,7.1779776L32,9.7689811C32,10.167998,31.700989,10.566985,31.203003,10.566985L0.79800415,10.566985C0.29998779,10.466979,0,10.167998,0,9.7689811L0,7.0780021C0,6.6789847,0.29998779,6.3799735,0.79800415,6.3799735z M0.79800415,0L31.203003,0C31.60199,-8.1927283E-08,31.901001,0.29898059,31.901001,0.79797366L31.901001,3.3889767C31.901001,3.7879938,31.60199,4.1869808,31.102997,4.1869808L0.79800415,4.1869808C0.29998779,4.1869808,0,3.7879938,0,3.3889767L0,0.79797366C0,0.29898059,0.29998779,-8.1927283E-08,0.79800415,0z" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarToggleButton Icon="Filter"
+                                Label="Filter by Installed"
+                                Checked="AppBarToggleButton_Checked"
+                                Unchecked="AppBarToggleButton_Unchecked">                
+            </AppBarToggleButton>
+            <AppBarSeparator VerticalAlignment="Stretch" />
+            <AppBarButton x:Name="refreshButton"
+                          Icon="Refresh"
+                          Label="Refresh"
+                          Click="refreshButton_Click" />
+        </CommandBar>
+        <Grid Grid.Row="1">
+            <Controls:DataGrid x:Name="libraryDisplay"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Stretch"
+                               VerticalScrollBarVisibility="Auto"
+                               AutoGenerateColumns="False"
+                               CanUserSortColumns="True"
+                               CanUserResizeColumns="True"
+                               Loading="libraryDisplay_Loading"
+                               RowDetailsVisibilityMode="VisibleWhenSelected"
+                               SelectionChanged="libraryDisplay_SelectionChanged"
+                               AlternatingRowBackground="#303030"
+                               ItemsSource="{x:Bind Games}"
+                               Sorting="libraryDisplay_Sorting">
+                <Controls:DataGrid.Columns>
+                    <Controls:DataGridTemplateColumn Header="Title" Tag="Title" CanUserSort="True" SortDirection="Ascending" Width="350" HeaderStyle="{StaticResource TitleHeaderStyle}">
+                        <Controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" GotFocus="TemplateColumn_GotFocus" HorizontalTextAlignment="Left" VerticalAlignment="Center" Margin="15,0" />
+                            </DataTemplate>
+                        </Controls:DataGridTemplateColumn.CellTemplate>
+                        <Controls:DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox x:Name="titleEdit" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" GotFocus="TemplateColumn_GotFocus" HorizontalTextAlignment="Center" />
+                            </DataTemplate>
+                        </Controls:DataGridTemplateColumn.CellEditingTemplate>
+                    </Controls:DataGridTemplateColumn>
+                    <!--<Controls:DataGridTextColumn Header="Title" Tag="Title" Binding="{Binding Title}" CanUserSort="True" SortDirection="Ascending" Width="350" HeaderStyle="{StaticResource TitleHeaderStyle}" />-->
+                    <Controls:DataGridTemplateColumn Header="System" Tag="Console" Width="125" HeaderStyle="{StaticResource CenteredHeaderStyle}">
+                        <Controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ConsoleGeneration, Converter={StaticResource enumToStringConverter}, Mode=TwoWay}" GotFocus="TemplateColumn_GotFocus" HorizontalTextAlignment="Center" VerticalAlignment="Center" />
+                            </DataTemplate>                            
+                        </Controls:DataGridTemplateColumn.CellTemplate>
+                        <Controls:DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedIndex="{Binding ConsoleGeneration, Converter={StaticResource enumToIntConverter}, Mode=TwoWay}" HorizontalAlignment="Stretch">
+                                    <ComboBoxItem Content="Windows" />
+                                    <ComboBoxItem Content="Xbox" />
+                                    <ComboBoxItem Content="Xbox 360" />
+                                    <ComboBoxItem Content="Xbox One" />
+                                    <ComboBoxItem Content="Xbox Series S|X" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </Controls:DataGridTemplateColumn.CellEditingTemplate>
+                    </Controls:DataGridTemplateColumn>
+                    <!--<Controls:DataGridTextColumn Header="System" Tag="Console" Binding="{Binding ConsoleGeneration, Converter={StaticResource enumToStringConverter}}" Width="125" CellStyle="{StaticResource CenteredCellStyle}" HeaderStyle="{StaticResource CenteredHeaderStyle}" />-->
+                    <Controls:DataGridTextColumn Header="Format" Tag="Format" Binding="{Binding GameFormat}" Width="100" CellStyle="{StaticResource CenteredCellStyle}" HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                    <Controls:DataGridTextColumn Header="GamePass" Tag="GamePass" Binding="{Binding GamePassStatus, Converter={StaticResource enumToStringConverter}}" Width="135" CellStyle="{StaticResource CenteredCellStyle}" HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                    <Controls:DataGridCheckBoxColumn Header="Completed" Tag="Completed" Binding="{Binding IsGameCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="110" CellStyle="{StaticResource CompletedCheckBoxCellStyle}" HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                    <Controls:DataGridCheckBoxColumn Header="Achievements" Tag="Achievements" Binding="{Binding IsAchievementsComplete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" CellStyle="{StaticResource AchievementsCheckBoxCellStyle}" HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                    <Controls:DataGridCheckBoxColumn Header="Installed" Tag="Installed" Binding="{Binding IsInstalled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="95" CellStyle="{StaticResource InstalledCheckBoxCellStyle}" HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                    <Controls:DataGridTemplateColumn Tag="CurrentScore">
+                        <Controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding CurrentAchievements, UpdateSourceTrigger=PropertyChanged}" GotFocus="TemplateColumn_GotFocus" HorizontalTextAlignment="Center" VerticalAlignment="Center" />
+                            </DataTemplate>
+                        </Controls:DataGridTemplateColumn.CellTemplate>
+                        <Controls:DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding CurrentAchievements, UpdateSourceTrigger=PropertyChanged}" GotFocus="TemplateColumn_GotFocus" HorizontalTextAlignment="Center" />
+                            </DataTemplate>
+                        </Controls:DataGridTemplateColumn.CellEditingTemplate>
+                    </Controls:DataGridTemplateColumn>
+                    <Controls:DataGridTextColumn Header="Current Score" Tag="CurrentScore" Binding="{Binding CurrentAchievements, UpdateSourceTrigger=PropertyChanged}" Width="120" CellStyle="{StaticResource CenteredCellStyle}" HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                    <Controls:DataGridTextColumn Header="Max Score" Tag="MaxScore" Binding="{Binding MaxAchievements, UpdateSourceTrigger=PropertyChanged}" Width="140" CellStyle="{StaticResource CenteredCellStyle}" HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                    <Controls:DataGridTextColumn Header="% Score" Tag="PctScore" Binding="{Binding PercentAchievements, UpdateSourceTrigger=PropertyChanged}" Width="120" CellStyle="{StaticResource CenteredCellStyle}" HeaderStyle="{StaticResource CenteredHeaderStyle}" />
+                    <Controls:DataGridTextColumn Header="Date Added" Tag="DateAdded" Binding="{Binding DateAdded, Converter={StaticResource dateToStringConverter}}" IsReadOnly="True" CellStyle="{StaticResource CenteredCellStyle}" HeaderStyle="{StaticResource CenteredHeaderStyle}" Foreground="Gray" />
+                </Controls:DataGrid.Columns>
+                <Controls:DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Background="#303" Grid.Column="0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox x:Name="detailsTitle"  Width="330" HorizontalTextAlignment="Left" Text="{Binding Title, Mode=TwoWay}" Margin="10" />
+                                    <ComboBox Width="120" HorizontalContentAlignment="Center" Margin="10" PlaceholderText="System" SelectedIndex="{Binding ConsoleGeneration, Converter={StaticResource enumToIntConverter}, Mode=TwoWay}">
+                                        <ComboBoxItem Content="Windows" />
+                                        <ComboBoxItem Content="Xbox" />
+                                        <ComboBoxItem Content="Xbox 360" />
+                                        <ComboBoxItem Content="Xbox One" />
+                                        <ComboBoxItem Content="Xbox Series S|X" />
+                                    </ComboBox>
+                                    <ComboBox Width="100" HorizontalContentAlignment="Center" Margin="10" PlaceholderText="Format">
+                                        <ComboBoxItem Content="Digital" />
+                                        <ComboBoxItem Content="Physical" />
+                                    </ComboBox>
+                                    <ComboBox Width="135" HorizontalContentAlignment="Center" Margin="10" PlaceholderText="GamePass">
+                                        <ComboBoxItem Content="Available" />
+                                        <ComboBoxItem Content="Not Applicable" />
+                                        <ComboBoxItem Content="Removed" />
+                                    </ComboBox>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <ToggleButton Content="Completed" Width="110" IsChecked="{Binding IsGameCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10" />
+                                    <ToggleButton Content="Achievements" Width="120" IsChecked="{Binding IsAchievementsComplete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10" />
+                                    <ToggleButton Content="Installed" Width="95" IsChecked="{Binding IsInstalled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10" />
+                                    <Slider Value="{Binding CurrentAchievements, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding MaxAchievements, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="280" Margin="10" />                                    
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Background="#303" VerticalAlignment="Stretch" Orientation="Horizontal">
+                                <PathIcon Margin="50,50" Data="M18.551998,14.302987L18.551998,28.304994 21.451992,28.304994 21.451992,14.302987z M11.295988,14.302987L11.295988,28.304994 14.196988,28.304994 14.196988,14.302987z M4.0390009,14.302987L4.0390009,28.304994 6.9400014,28.304994 6.9400014,14.302987z M0,11.068995L25.492001,11.068995 24.680996,31.999999 0.81100462,31.999999z M8.692015,1.358993L8.692015,3.2749924 16.800015,3.2749924 16.800015,1.358993z M6.9400014,0L18.551998,0 18.551998,3.2749924 25.492001,3.2749924 25.492001,7.7210044 0,7.7210044 0,3.2749924 6.9400014,3.2749924z" Foreground="#ffc90907" Tapped="PathIcon_Tapped" />
+                                <Button x:Name="updateRecord" Content="Update" Click="updateRecord_Click" />
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </Controls:DataGrid.RowDetailsTemplate>
+            </Controls:DataGrid>
+        </Grid>
+        <StackPanel Grid.Row="2" Margin="5" Background="#222" Orientation="Horizontal">
+            <TextBlock x:Name="statusOutput"
+                       HorizontalAlignment="Stretch"
+                       FontWeight="Bold"
+                       Foreground="LawnGreen"
+                       Padding="5">
+            </TextBlock>
+        </StackPanel>
+    </Grid>
+</Page>
