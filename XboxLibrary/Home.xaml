@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid >
         <Grid.Background>
-            <ImageBrush ImageSource="/Assets/Xbox Wallpaper.png" Stretch="UniformToFill" />
+            <ImageBrush ImageSource="/Assets/Xbox Wallpaper.png" Stretch="UniformToFill" Opacity=".15" />
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
@@ -21,22 +21,22 @@
             <RowDefinition Height="4*" />
             <RowDefinition Height="5*" />
         </Grid.RowDefinitions>
-        <Border BorderBrush="Purple" Grid.Column="1" Grid.Row="1" BorderThickness="2" />
+        <!--<Border BorderBrush="Purple" Grid.Column="1" Grid.Row="1" BorderThickness="2" />-->
         <Grid Grid.Column="0" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Right">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition />
+                <RowDefinition Height="Auto" />
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="Games in Library " FontSize="48" HorizontalAlignment="Right" Margin="0,0,5,0" />
-            <TextBlock Grid.Column="1" Grid.Row="0" Text="{x:Bind Games.Count}" FontSize="48" Foreground="{ThemeResource SystemAccentColorLight1}" HorizontalAlignment="Left" Margin="5,0,0,0" />
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Games in Library " TextDecorations="Underline" FontSize="36" HorizontalAlignment="Right" Margin="0,0,5,0" />
+            <TextBlock Grid.Column="1" Grid.Row="0" Text="{x:Bind Games.Count}" TextDecorations="Underline" FontSize="36" Foreground="{ThemeResource SystemAccentColorLight1}" HorizontalAlignment="Left" Margin="5,0,0,0" />
             <TextBlock Grid.Column="0" Grid.Row="1" Text="Xbox" FontSize="24" HorizontalAlignment="Right" Foreground="DarkGreen" Margin="0,0,5,0" />
             <TextBlock Grid.Column="1" Grid.Row="1" Text="{x:Bind Xbox.Count}" FontSize="24" Foreground="{ThemeResource SystemAccentColorLight1}" HorizontalAlignment="Left" Margin="5,0,0,0" />
             <TextBlock Grid.Column="0" Grid.Row="2" Text="Xbox 360" FontSize="24" HorizontalAlignment="Right" Foreground="LawnGreen" Margin="0,0,5,0" />
@@ -47,6 +47,33 @@
             <TextBlock Grid.Column="1" Grid.Row="4" Text="{x:Bind XboxSeries.Count}" FontSize="24" Foreground="{ThemeResource SystemAccentColorLight1}" HorizontalAlignment="Left" Margin="5,0,0,0" />
             <TextBlock Grid.Column="0" Grid.Row="5" Text="Windows" FontSize="24" HorizontalAlignment="Right" Foreground="CornflowerBlue" Margin="0,0,5,0" />
             <TextBlock Grid.Column="1" Grid.Row="5" Text="{x:Bind Windows.Count}" FontSize="24" Foreground="{ThemeResource SystemAccentColorLight1}" HorizontalAlignment="Left" Margin="5,0,0,0" />
-        </Grid>        
+        </Grid>
+        <Grid Grid.Column="2" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Text="File Status " TextDecorations="Underline" FontSize="36" HorizontalAlignment="Left" Margin="0,0,5,0" />
+            <!--<TextBlock Grid.Column="1" Grid.Row="0" Text="{x:Bind Games.Count}" TextDecorations="Underline" FontSize="36" Foreground="{ThemeResource SystemAccentColorLight1}" HorizontalAlignment="Left" Margin="5,0,0,0" />-->
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Location" FontSize="14" HorizontalAlignment="Left" Foreground="DarkGreen" Margin="0,0,5,0" />
+            <TextBlock Grid.Column="1" Grid.Row="1" Text="{x:Bind storageFile.Path}" FontSize="14" Foreground="{ThemeResource SystemAccentColorLight1}" HorizontalAlignment="Left" Margin="5,0,0,0" />
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Last Saved" FontSize="24" HorizontalAlignment="Left" Foreground="LawnGreen" Margin="0,0,5,0" />
+            <TextBlock Grid.Column="1" Grid.Row="2" Text="{x:Bind FileProperties.DateModified}" FontSize="24" Foreground="{ThemeResource SystemAccentColorLight1}" HorizontalAlignment="Left" Margin="5,0,0,0" />
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="Size (MB)" FontSize="24" HorizontalAlignment="Left" Foreground="Green" Margin="0,0,5,0" />
+            <TextBlock Grid.Column="1" Grid.Row="3" Text="{x:Bind FileProperties.Size}" FontSize="24" Foreground="{ThemeResource SystemAccentColorLight1}" HorizontalAlignment="Left" Margin="5,0,0,0" />
+            <!--<TextBlock Grid.Column="0" Grid.Row="4" Text="Xbox Series S|X" FontSize="24" HorizontalAlignment="Right" Foreground="SlateGray" Margin="0,0,5,0" />
+            <TextBlock Grid.Column="1" Grid.Row="4" Text="{x:Bind XboxSeries.Count}" FontSize="24" Foreground="{ThemeResource SystemAccentColorLight1}" HorizontalAlignment="Left" Margin="5,0,0,0" />
+            <TextBlock Grid.Column="0" Grid.Row="5" Text="Windows" FontSize="24" HorizontalAlignment="Right" Foreground="CornflowerBlue" Margin="0,0,5,0" />
+            <TextBlock Grid.Column="1" Grid.Row="5" Text="{x:Bind Windows.Count}" FontSize="24" Foreground="{ThemeResource SystemAccentColorLight1}" HorizontalAlignment="Left" Margin="5,0,0,0" />-->
+
+        </Grid>
     </Grid>
 </Page>

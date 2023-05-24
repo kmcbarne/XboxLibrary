@@ -32,7 +32,7 @@ namespace XboxLibrary
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage :+- Page
     {
         public static MainPage Current;     // https://stackoverflow.com/questions/59207572/how-can-correctly-i-get-mainpage
         public LibraryChangelog Changelog { get; set; }
@@ -155,14 +155,14 @@ namespace XboxLibrary
                 case "homeSelect":
                     ContentFrame.Navigate(typeof(Home));
                     break;
-                case "librarySelect":
+                case "individualViewSelect":
+                    ContentFrame.Navigate(typeof(EditSingleItem));
+                    break;
+                case "fullLibrarySelect":
                     ContentFrame.Navigate(typeof(LibraryDataGrid));
                     break;
                 case "addGameSelect":
                     ContentFrame.Navigate(typeof(AddNewGame));
-                    break;
-                case "editSingleSelect":
-                    ContentFrame.Navigate(typeof(EditSingleItem));
                     break;
                 case "advancedSearchSelect":
                     ContentFrame.Navigate(typeof(AdvancedSearch));

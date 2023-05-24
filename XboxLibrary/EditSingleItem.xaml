@@ -14,13 +14,14 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="75" />
-            <RowDefinition Height="30" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="35" />
             <RowDefinition Height="2*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <AutoSuggestBox x:Name="gameSearch" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Margin="20,20" PlaceholderText="Search for a game" QueryIcon="Find" KeyUp="gameSearch_KeyUp" TextChanged="gameSearch_TextChanged" QuerySubmitted="gameSearch_QuerySubmitted" DisplayMemberPath="Title" TextMemberPath="Title" />
-        <TextBlock Grid.Column="0" Grid.Row="1" Margin="20,0" Text="Previous Entries" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <!--<AutoSuggestBox x:Name="gameSearch" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Margin="20,20" PlaceholderText="Search for a game" QueryIcon="Find" KeyUp="gameSearch_KeyUp" TextChanged="gameSearch_TextChanged" QuerySubmitted="gameSearch_QuerySubmitted" DisplayMemberPath="Title" TextMemberPath="Title" />-->
+        <AutoSuggestBox x:Name="gameSearch" Grid.Column="1" Grid.Row="1" Margin="20,0,45,0" PlaceholderText="Search for a game" QueryIcon="Find" KeyUp="gameSearch_KeyUp" TextChanged="gameSearch_TextChanged" QuerySubmitted="gameSearch_QuerySubmitted" DisplayMemberPath="Title" TextMemberPath="Title" />
+        <TextBlock Grid.Column="0" Grid.Row="0" Margin="20,0" Text="Previous Entries" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <Button x:Name="deleteEnable" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" MaxHeight="30" Tapped="deleteEnable_Tapped">
             <Viewbox>
                 <Grid>
@@ -29,7 +30,7 @@
                 </Grid>
             </Viewbox>
         </Button>
-        <ListBox x:Name="priorTenEntries" Grid.Column="0" Grid.Row="2" Margin="20,0" SelectionMode="Single" Height="430" VerticalAlignment="Top" />
+        <ListBox x:Name="priorTenEntries" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Margin="20,0" SelectionMode="Single" Height="430" VerticalAlignment="Top" />
         <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2">
             <!--<local:GameFields x:Name="fieldControl" />-->
             <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -48,7 +49,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -66,7 +67,7 @@
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="Title" />
                 <TextBox x:Name="titleField" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Margin="5" IsReadOnly="True" />
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Console" />
-                <ComboBox x:Name="consoleSelect" Grid.Column="1" Grid.Row="1">
+                <ComboBox x:Name="consoleSelect" Grid.Column="1" Grid.Row="1" CornerRadius="5" KeyUp="comboBoxSelect_KeyUp">
                     <ComboBox.Items>
                         <ComboBoxItem Content="Windows" />
                         <ComboBoxItem Content="Xbox" />
@@ -76,20 +77,20 @@
                     </ComboBox.Items>
                 </ComboBox>
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="GamePass" />
-                <ComboBox x:Name="gamePassSelect" Grid.Column="1" Grid.Row="2">
+                <ComboBox x:Name="gamePassSelect" Grid.Column="1" Grid.Row="2" CornerRadius="5" KeyUp="comboBoxSelect_KeyUp">
                     <ComboBoxItem Content="Available" />
                     <ComboBoxItem Content="Not Applicable" />
                     <ComboBoxItem Content="Removed" />
                     <ComboBoxItem Content="Unknown" />
                 </ComboBox>
                 <TextBlock Grid.Column="0" Grid.Row="3" Text="Format" />
-                <ComboBox x:Name="formatSelect" Grid.Column="1" Grid.Row="3">
+                <ComboBox x:Name="formatSelect" Grid.Column="1" Grid.Row="3" CornerRadius="5" KeyUp="comboBoxSelect_KeyUp">
                     <ComboBoxItem Content="Physical" />
                     <ComboBoxItem Content="Digital" />
                     <ComboBoxItem Content="Unknown" />
                 </ComboBox>
                 <TextBlock Grid.Column="2" Grid.Row="1" Text="Options" />
-                <ListBox Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Margin="5" SelectionMode="Multiple">
+                <ListBox Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Margin="5" SelectionMode="Multiple" >
                     <ListBoxItem x:Name="completedToggle" Content="Completed" />
                     <ListBoxItem x:Name="achievementsToggle" Content="100% Achievements" />
                     <ListBoxItem x:Name="installedToggle" Content="Installed" />
@@ -98,7 +99,7 @@
                 <StackPanel Grid.Column="1" Grid.Row="5" Orientation="Horizontal" Canvas.ZIndex="7" >
                     <TextBox x:Name="currentScoreField" Grid.Column="1" Grid.Row="5" Margin="5" Text="0" Background="Transparent" BorderBrush="Transparent" TextAlignment="Center" GotFocus="selectAllField_GotFocus" />
                     <TextBlock Grid.Column="2" Grid.Row="5" HorizontalAlignment="Center" Text="of" />
-                    <TextBox x:Name="maxScoreField" Grid.Column="3" Grid.Row="5" Margin="5" Text="1000" Background="Transparent" BorderBrush="Transparent" TextAlignment="Center" />
+                    <TextBox x:Name="maxScoreField" Grid.Column="3" Grid.Row="5" Margin="5" Text="1000" Background="Transparent" BorderBrush="Transparent" TextAlignment="Center" GotFocus="selectAllField_GotFocus" />
                 </StackPanel>
                 <ProgressBar Grid.Column="1" Grid.Row="5" Maximum="1000" Minimum="0" Value="78" Height="35" CornerRadius="5" Margin="5" Canvas.ZIndex="2" />
                 <TextBlock Grid.Column="0" Grid.Row="6" Text="Date Added" />
@@ -108,16 +109,52 @@
                     <Button Content="Save Changes" HorizontalAlignment="Center" Margin="10" Click="saveChanges_Click" />
                     <Button x:Name="deleteGame" Content="Delete Game" HorizontalAlignment="Center" Margin="10" Tapped="deleteGame_Tapped" Background="DarkRed" Foreground="White" Visibility="Collapsed" />
                 </StackPanel>
+                <StackPanel Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="4" Orientation="Horizontal" DragOver="StackPanel_DragOver">
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontSize" Value="14" />
+                            <Setter Property="Margin" Value="7,0" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBlock Text="A" />
+                    <TextBlock Text="B" />
+                    <TextBlock Text="C" />
+                    <TextBlock Text="D" />
+                    <TextBlock Text="E" />
+                    <TextBlock Text="F" />
+                    <TextBlock Text="G" />
+                    <TextBlock Text="H" />
+                    <TextBlock Text="I" />
+                    <TextBlock Text="J" />
+                    <TextBlock Text="K" />
+                    <TextBlock Text="L" />
+                    <TextBlock Text="M" />
+                    <TextBlock Text="N" />
+                    <TextBlock Text="O" />
+                    <TextBlock Text="P" />
+                    <TextBlock Text="Q" />
+                    <TextBlock Text="R" />
+                    <TextBlock Text="S" />
+                    <TextBlock Text="T" />
+                    <TextBlock Text="U" />
+                    <TextBlock Text="V" />
+                    <TextBlock Text="W" />
+                    <TextBlock Text="X" />
+                    <TextBlock Text="Y" />
+                    <TextBlock Text="Z" />
+                    <TextBlock Text="#" />
+                </StackPanel>
+<!--                <TextBlock Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="4" Text="A   B   C   D   E   F   G   H   I   J   K   L   M   N   O   P   Q   R   S   T   U   V   W   X   Y   Z   #"   HorizontalAlignment="Stretch" />  -->
             </Grid>
             <Button x:Name="randomGameSelect" Padding="10" HorizontalAlignment="Center" Margin="0,50" ToolTipService.ToolTip="Random Game" Tapped="randomGameSelect_Tapped">
                 <PathIcon Data="M12.36993,23.043995C11.571945,23.043995 10.873936,23.741993 10.873936,24.539997 10.873936,25.338001 11.571945,26.037005 12.36993,26.037005 13.16793,26.037005 13.865925,25.338001 13.865925,24.539997 13.865925,23.741993 13.16793,23.043995 12.36993,23.043995z M3.5909843,23.043995C2.7929847,23.043995 2.0949902,23.741993 2.0949904,24.539997 2.0949902,25.338001 2.7929847,26.037005 3.5909843,26.037005 4.3889844,26.037005 5.0879709,25.338001 5.0879709,24.539997 5.0879709,23.741993 4.3889844,23.043995 3.5909843,23.043995z M8.0799591,18.754019C7.2819597,18.754019 6.583965,19.452993 6.583965,20.250998 6.583965,21.049002 7.2819597,21.747 8.0799591,21.747 8.8789512,21.747 9.5769455,21.049002 9.5769455,20.250998 9.5769455,19.452993 8.8789512,18.754019 8.0799591,18.754019z M21.24789,14.864006C20.449889,14.864006 19.751895,15.562004 19.751895,16.360008 19.751895,17.158012 20.449889,17.857016 21.24789,17.857016 22.046882,17.857016 22.744876,17.158012 22.744876,16.360008 22.744876,15.461998 22.145881,14.864006 21.24789,14.864006z M12.36993,14.265008C11.571945,14.265008 10.873936,14.964012 10.873936,15.762016 10.873936,16.560021 11.571945,17.258019 12.36993,17.258019 13.16793,17.258019 13.865925,16.560021 13.865925,15.762016 13.865925,14.964012 13.16793,14.265008 12.36993,14.265008z M3.5909843,14.265008C2.6939861,14.265008 1.9949847,14.964012 1.9949847,15.762016 1.9949847,16.560021 2.6939861,17.258019 3.4919857,17.258019 4.2899706,17.258019 4.9879805,16.560021 4.9879805,15.762016 5.0879709,14.964012 4.3889844,14.265008 3.5909843,14.265008z M1.69599,12.170008L14.46492,12.170008C15.462917,12.170008,16.160911,12.969018,16.160911,13.866021L16.160911,26.336016C16.160911,27.334002,15.362926,28.032,14.46492,28.032L1.69599,28.032C0.6979944,28.032,0,27.233996,0,26.336016L0,13.866021C0,12.869012,0.79799997,12.170008,1.69599,12.170008z M21.24789,9.0779982C20.449889,9.0779982 19.751895,9.7759963 19.751895,10.574 19.751895,11.372004 20.449889,12.071009 21.24789,12.071009 22.046882,12.071009 22.744876,11.372004 22.744876,10.574 22.744876,9.7759963 22.145881,9.0779982 21.24789,9.0779982z M21.24789,3.7910138C20.449889,3.7910138 19.751895,4.4890114 19.751895,5.287015 19.751895,6.0850192 20.449889,6.7840238 21.24789,6.7840238 22.046882,6.7840238 22.744876,6.0850192 22.744876,5.287015 22.744876,4.4890114 22.145881,3.7910138 21.24789,3.7910138z M21.447885,7.1054274E-15C21.946891,-3.7818012E-08,22.345876,0.20001208,22.744876,0.4990231L31.523837,9.7759963C32.22183,10.475001,32.121827,11.572016,31.423831,12.170008L22.345876,20.749991C21.647882,21.448019,20.549895,21.348013,19.951892,20.650015L17.955899,18.654989 17.955899,13.866021C17.955899,11.971003,16.45992,10.475001,14.564926,10.475001L10.773946,10.475001 10.773946,10.374995C10.773946,9.8760024,10.873936,9.3770095,11.272936,8.9780227L20.35089,0.39901697C20.649886,0.20001208,21.048886,-3.7818012E-08,21.447885,7.1054274E-15z" />
             </Button>
-            <Button x:Name="trueAchievementsButton" HorizontalAlignment="Center" Margin="0,50" ToolTipService.ToolTip="Open in TrueAchievements" Tapped="trueAchievementsButton_Tapped">
+            <Button x:Name="trueAchievementsButton" HorizontalAlignment="Center" Margin="0,10" ToolTipService.ToolTip="Open in TrueAchievements" Tapped="trueAchievementsButton_Tapped">
                 <Image Source="/Assets/true-achievements-icon-small.png" MaxWidth="48" />
             </Button>
         </StackPanel>
-        <TextBlock Grid.Column="2" Grid.Row="1" Margin="20,0" Text="Next Entries" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <ListBox x:Name="nextTenEntries" Grid.Column="2" Grid.Row="2" Margin="20,0" SelectionMode="Single" Height="430" VerticalAlignment="Top" />
+        <TextBlock Grid.Column="2" Grid.Row="0" Margin="20,0" Text="Next Entries" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <ListBox x:Name="nextTenEntries" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="20,0" SelectionMode="Single" Height="430" VerticalAlignment="Top" />
         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button x:Name="goToFirst" Padding="10" Margin="5">
                 <PathIcon Data="M18.897003,1.242982L18.897003,12.022985 32,1.242982 32,12.229987 32,23.219006 18.897003,12.436988 18.897003,23.219006 5.5429993,12.229987z M0,0L5.5429993,0 5.5429993,12.229987 5.5429993,12.230994 5.5429993,24.464001 0,24.464001z" />

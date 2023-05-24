@@ -23,14 +23,7 @@ namespace XboxLibrary
         /// <returns>A string converted from a deserialized JSON Storage File.</returns>
         private static async Task<string> DeserializeAsync(StorageFile storageFile)
         {
-            try
-            {
-                return await FileIO.ReadTextAsync(storageFile);
-            }
-            catch (FileNotFoundException)
-            {
-                return null;
-            }
+            return await FileIO.ReadTextAsync(storageFile);
         }
 
         /// <summary>
@@ -60,12 +53,16 @@ namespace XboxLibrary
         /// </summary>
         public static async void Write(StorageFile storageFile)
         {
-            if (storageFile != null)
+            try
             {
-                DataLibrary.Sort();
-                string jsonOutputData = JsonConvert.SerializeObject(DataLibrary.DataStore, Formatting.Indented);
-                await FileIO.WriteTextAsync(storageFile, jsonOutputData);
+                if (storageFile != null)
+                {
+                    DataLibrary.Sort();
+                    string jsonOutputData = JsonConvert.SerializeObject(DataLibrary.DataStore, Formatting.Indented);
+                    await FileIO.WriteTextAsync(storageFile, jsonOutputData);
+                }
             }
+            catch (Exception ex) { }
         }
     }
 }

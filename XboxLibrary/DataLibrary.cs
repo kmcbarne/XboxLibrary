@@ -35,7 +35,7 @@ namespace XboxLibrary
         public async static void Initialize()
         {
             if (!HasAccess())
-                SelectDataFile();
+                await SelectDataFile();
 
             DataStore = await JsonUtilities.Read(storageFile);
         }
@@ -69,7 +69,7 @@ namespace XboxLibrary
         /// <summary>
         /// Displays a FileOpenPicker that allows the user to create or select a JSON file to be used to store Game Library data.
         /// </summary>
-        private static async void SelectDataFile()
+        public static async Task SelectDataFile()
         {
             if (storageFile.IsEqual(null))
             {

@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
+using Windows.UI.Input.Preview.Injection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -65,8 +68,8 @@ namespace XboxLibrary
             achievementsToggle.IsSelected = false;
             installedToggle.IsSelected = false;
 
-            currentScoreField.Text = "";
-            maxScoreField.Text = "";
+            currentScoreField.Text = "0";
+            maxScoreField.Text = "1000";
 
             dateAddedSelect.SelectedDate = defaultDate;
             gameSearch.Text = "";
@@ -232,6 +235,9 @@ namespace XboxLibrary
 
         private void saveChanges_Click(object sender, RoutedEventArgs e)
         {
+            // Need to fix crash resulting from attemptng to edit the title of an existing game and saving.  When this happens,
+            // the <i>unfinishedGames</i> collection below has no games in it, as the new title cannot be found in the original library.
+            // Possible solution:  Save off the original title of an existing game when that title starts being edited.
             ObservableCollection<Game> unfinishedGames = new ObservableCollection<Game>(DataLibrary.DataStore.Where(game => game.Title.ToLowerInvariant().Equals(titleField.Text.ToLowerInvariant())));
 
             int targetIndex = DataLibrary.DataStore.IndexOf(unfinishedGames[0]);
@@ -297,11 +303,16 @@ namespace XboxLibrary
 
         private void GetPreviousEntries()
         {
+            // Clears any previously added entries in priorTenEntries ListBox
+            if (priorTenEntries.Items.Count > 0)
+                priorTenEntries.Items.Clear();
+
+            // Checks for the condition of being one of the first 10 games in the library
             if (currentIndex < 10)
-                for (int i = 1; i < currentIndex; i++)
+                for (int i = 1; i < currentIndex + 1; i++)
                     priorTenEntries.Items.Add(CreateListBoxItem(currentIndex - i));
             else
-                for (int i = 1; i < 10; i++)
+                for (int i = 1; i < 11; i++)
                     priorTenEntries.Items.Add(CreateListBoxItem(currentIndex - i));
 
         }
@@ -313,11 +324,16 @@ namespace XboxLibrary
         /// </summary>
         private void GetNextEntries()
         {
+            // Clears any previously added entries in nextTenEntries ListBox
+            if (nextTenEntries.Items.Count > 0)
+                nextTenEntries.Items.Clear();
+
+            // Checks for the condition of being one of the last 10 games in the library
             if (currentIndex > DataLibrary.DataStore.Count - 10)
                 for (int i = currentIndex + 1; i < DataLibrary.DataStore.Count; i++)
                     nextTenEntries.Items.Add(CreateListBoxItem(i));
             else
-                for (int i = 0; i < 10; i++)
+                for (int i = 1; i < 11; i++)
                     nextTenEntries.Items.Add(CreateListBoxItem(currentIndex + i));
         }
 
@@ -512,8 +528,36 @@ namespace XboxLibrary
             }
         }
 
-        private void Entry_KeyDown(object sender, KeyRoutedEventArgs e)
+        /// <summary>
+        /// Simulates a keyboard keypress programmatically.
+        /// Reference:  https://stackoverflow.com/questions/56636716/how-to-simulate-a-tab-key-press-with-code-in-uwp
+        /// </summary>
+        /// <param name="key">The VirtualKey representing the key needing to be pressed.</param>
+        /// <param name="options">Any options needing to be attached to the simulated keypress.</param>
+        private async void InjectKey(VirtualKey key, [Optional]InjectedInputKeyOptions options)
         {
+            //InputInjector injector = InputInjector.TryCreate();
+
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    var info = new InjectedInputKeyboardInfo();
+            //    info.VirtualKey = (ushort)key;
+            //    info.KeyOptions = options;
+            //    injector.InjectKeyboardInput(new[] { info });
+            //    await Task.Delay(1000);
+            //}
+        }
+
+        private async void Entry_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            //VirtualKey key = VirtualKey.Enter;            
+
+            //if (e.Key == VirtualKey.Enter)
+            //{
+            //    InjectKey(VirtualKey.Tab);
+            //    InjectKey(VirtualKey.Tab, InjectedInputKeyOptions.KeyUp);
+            //}
+
             priorTenEntries.Items.Clear();
             nextTenEntries.Items.Clear();
 
@@ -621,8 +665,7 @@ namespace XboxLibrary
 
         private void selectAllField_GotFocus(object sender, RoutedEventArgs e)
         {
-            TextBox box = (TextBox)sender;
-
+            TextBox box = sender as TextBox;
             box.SelectAll();
         }
 
@@ -632,7 +675,7 @@ namespace XboxLibrary
             string titleLink = titleField.Text;
             string trailingLink = "/achievements";
 
-            titleLink = titleLink.Replace(' ', '+');
+            titleLink = titleLink.Replace(' ', '-');
             titleLink = titleLink.Replace("\'", "");
 
             string taLink = baseLink + titleLink + trailingLink;
@@ -640,5 +683,21 @@ namespace XboxLibrary
             var taUri = new Uri(taLink);
             await Launcher.LaunchUriAsync(taUri);            
         }
-    }
-}
+
+        private void comboBoxSelect_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+
+            if(e.Key == VirtualKey.Delete)
+                comboBox.SelectedIndex = -1;
+        }
+
+        private void StackPanel_DragOver(object sender, DragEventArgs e)
+        {
+            TextBlock block = sender as TextBlock;
+            if(block != null)
+            {
+                block.FontSize = 20;
+            }
+        }
+    }0

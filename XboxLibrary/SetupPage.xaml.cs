@@ -34,15 +34,18 @@ namespace XboxLibrary
 
         private async void SelectPrimaryLibrary()
         {
-            var filePicker = new FileOpenPicker();
-            filePicker.ViewMode = PickerViewMode.List;
-            filePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            filePicker.FileTypeFilter.Add(".json");
+            //var filePicker = new FileOpenPicker();
+            //filePicker.ViewMode = PickerViewMode.List;
+            //filePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            //filePicker.FileTypeFilter.Add(".json");
 
-            StorageFile file = await filePicker.PickSingleFileAsync();
-                        
-            LibraryToken = StorageApplicationPermissions.FutureAccessList.Add(file);
-            ApplicationData.Current.LocalSettings.Values["libraryToken"] = LibraryToken;     
+            //StorageFile file = await filePicker.PickSingleFileAsync();
+
+            //LibraryToken = StorageApplicationPermissions.FutureAccessList.Add(file);
+            //ApplicationData.Current.LocalSettings.Values["libraryToken"] = LibraryToken;     
+            await DataLibrary.SelectDataFile();
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(MainPage));
         }
 
         private void browseLibrary_Click(object sender, RoutedEventArgs e)

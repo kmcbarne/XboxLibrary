@@ -170,6 +170,8 @@ namespace XboxLibrary
 
             AddToLibrary();
             ClearForm();
+
+            titleField.Focus(FocusState.Programmatic);
         }
 
         private void selectAllField_GotFocus(object sender, RoutedEventArgs e)
