@@ -32,7 +32,7 @@ namespace XboxLibrary
         /// Acts as a temporary Game object to store edits to until written to json file.
         /// </summary>
         IEnumerable<Game> searchResults { get; set; }
-        
+
         /// <summary>
         /// Stores the index of the currently displayed Game.
         /// </summary>
@@ -223,7 +223,7 @@ namespace XboxLibrary
                 searchResults.FirstOrDefault().MaxAchievements = Int32.Parse(maxScoreField.Text);
             if (fieldsChanged[9])
                 searchResults.FirstOrDefault().DateAdded = dateAddedSelect.Date.Date;
-                        
+
             JsonUtilities.Write();
         }
 
@@ -534,7 +534,7 @@ namespace XboxLibrary
         /// </summary>
         /// <param name="key">The VirtualKey representing the key needing to be pressed.</param>
         /// <param name="options">Any options needing to be attached to the simulated keypress.</param>
-        private async void InjectKey(VirtualKey key, [Optional]InjectedInputKeyOptions options)
+        private async void InjectKey(VirtualKey key, [Optional] InjectedInputKeyOptions options)
         {
             //InputInjector injector = InputInjector.TryCreate();
 
@@ -681,23 +681,24 @@ namespace XboxLibrary
             string taLink = baseLink + titleLink + trailingLink;
 
             var taUri = new Uri(taLink);
-            await Launcher.LaunchUriAsync(taUri);            
+            await Launcher.LaunchUriAsync(taUri);
         }
 
         private void comboBoxSelect_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
 
-            if(e.Key == VirtualKey.Delete)
+            if (e.Key == VirtualKey.Delete)
                 comboBox.SelectedIndex = -1;
         }
 
         private void StackPanel_DragOver(object sender, DragEventArgs e)
         {
             TextBlock block = sender as TextBlock;
-            if(block != null)
+            if (block != null)
             {
                 block.FontSize = 20;
             }
         }
-    }0
+    }
+}

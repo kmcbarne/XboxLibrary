@@ -71,17 +71,19 @@ namespace XboxLibrary
         /// </summary>
         public static async Task SelectDataFile()
         {
-            if (storageFile.IsEqual(null))
+            // Potential issue with null check
+            if (DataLibrary.storageFile.IsEqual(null))
             {
                 var filePicker = new FileOpenPicker();
                 filePicker.ViewMode = PickerViewMode.List;
                 filePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-                filePicker.FileTypeFilter.Add("*.json");
+                filePicker.FileTypeFilter.Add(".json");
                 filePicker.CommitButtonText = "Select Data File";
                 filePicker.SettingsIdentifier = "DataFile";
 
                 StorageFile file = await filePicker.PickSingleFileAsync();
 
+                // Potential issue with null check
                 if (PrimaryLibraryToken.Equals(null) && !StorageApplicationPermissions.FutureAccessList.ContainsItem("libraryToken"))
                 {
                     PrimaryLibraryToken = StorageApplicationPermissions.FutureAccessList.Add(file);

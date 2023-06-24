@@ -32,7 +32,7 @@ namespace XboxLibrary
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage :+- Page
+    public sealed partial class MainPage : Page
     {
         public static MainPage Current;     // https://stackoverflow.com/questions/59207572/how-can-correctly-i-get-mainpage
         public LibraryChangelog Changelog { get; set; }
