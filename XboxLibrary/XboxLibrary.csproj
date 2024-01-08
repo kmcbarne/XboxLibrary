@@ -132,6 +132,7 @@
     <Compile Include="ColorPickerFlyout.xaml.cs">
       <DependentUpon>ColorPickerFlyout.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Console.cs" />
     <Compile Include="DataLibrary.cs" />
     <Compile Include="DateToStringConverter.cs" />
     <Compile Include="EditSingleItem.xaml.cs">
