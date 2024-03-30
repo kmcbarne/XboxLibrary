@@ -1,0 +1,78 @@
+[1mdiff --git a/XboxLibrary.sln b/XboxLibrary.sln[m
+[1mindex 99fe782..a9cbd89 100644[m
+[1m--- a/XboxLibrary.sln[m
+[1m+++ b/XboxLibrary.sln[m
+[36m@@ -7,16 +7,21 @@[m [mProject("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XboxLibrary", "XboxLibrary\[m
+ EndProject[m
+ Global[m
+ 	GlobalSection(SolutionConfigurationPlatforms) = preSolution[m
+[32m+[m		[32mDebug|Any CPU = Debug|Any CPU[m
+ 		Debug|ARM = Debug|ARM[m
+ 		Debug|ARM64 = Debug|ARM64[m
+ 		Debug|x64 = Debug|x64[m
+ 		Debug|x86 = Debug|x86[m
+[32m+[m		[32mRelease|Any CPU = Release|Any CPU[m
+ 		Release|ARM = Release|ARM[m
+ 		Release|ARM64 = Release|ARM64[m
+ 		Release|x64 = Release|x64[m
+ 		Release|x86 = Release|x86[m
+ 	EndGlobalSection[m
+ 	GlobalSection(ProjectConfigurationPlatforms) = postSolution[m
+[32m+[m		[32m{4390ABC7-A224-4B52-8BC2-839355EC25A0}.Debug|Any CPU.ActiveCfg = Debug|x64[m
+[32m+[m		[32m{4390ABC7-A224-4B52-8BC2-839355EC25A0}.Debug|Any CPU.Build.0 = Debug|x64[m
+[32m+[m		[32m{4390ABC7-A224-4B52-8BC2-839355EC25A0}.Debug|Any CPU.Deploy.0 = Debug|x64[m
+ 		{4390ABC7-A224-4B52-8BC2-839355EC25A0}.Debug|ARM.ActiveCfg = Debug|ARM[m
+ 		{4390ABC7-A224-4B52-8BC2-839355EC25A0}.Debug|ARM.Build.0 = Debug|ARM[m
+ 		{4390ABC7-A224-4B52-8BC2-839355EC25A0}.Debug|ARM.Deploy.0 = Debug|ARM[m
+[36m@@ -29,6 +34,9 @@[m [mGlobal[m
+ 		{4390ABC7-A224-4B52-8BC2-839355EC25A0}.Debug|x86.ActiveCfg = Debug|x86[m
+ 		{4390ABC7-A224-4B52-8BC2-839355EC25A0}.Debug|x86.Build.0 = Debug|x86[m
+ 		{4390ABC7-A224-4B52-8BC2-839355EC25A0}.Debug|x86.Deploy.0 = Debug|x86[m
+[32m+[m		[32m{4390ABC7-A224-4B52-8BC2-839355EC25A0}.Release|Any CPU.ActiveCfg = Release|x64[m
+[32m+[m		[32m{4390ABC7-A224-4B52-8BC2-839355EC25A0}.Release|Any CPU.Build.0 = Release|x64[m
+[32m+[m		[32m{4390ABC7-A224-4B52-8BC2-839355EC25A0}.Release|Any CPU.Deploy.0 = Release|x64[m
+ 		{4390ABC7-A224-4B52-8BC2-839355EC25A0}.Release|ARM.ActiveCfg = Release|ARM[m
+ 		{4390ABC7-A224-4B52-8BC2-839355EC25A0}.Release|ARM.Build.0 = Release|ARM[m
+ 		{4390ABC7-A224-4B52-8BC2-839355EC25A0}.Release|ARM.Deploy.0 = Release|ARM[m
+[1mdiff --git a/XboxLibrary/Console.cs b/XboxLibrary/Console.cs[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b9944e7[m
+[1m--- /dev/null[m
+[1m+++ b/XboxLibrary/Console.cs[m
+[36m@@ -0,0 +1,24 @@[m
+[32m+[m[32m﻿using System;[m
+[32m+[m[32musing System.Collections.Generic;[m
+[32m+[m[32musing System.Linq;[m
+[32m+[m[32musing System.Text;[m
+[32m+[m[32musing System.Threading.Tasks;[m
+[32m+[m[32musing Windows.UI.Xaml;[m
+[32m+[m
+[32m+[m[32mnamespace XboxLibrary[m
+[32m+[m[32m{[m
+[32m+[m[32m    public class Console[m
+[32m+[m[32m    {[m
+[32m+[m[32m        public string Name[m
+[32m+[m[32m        {[m
+[32m+[m[32m            get { return (string)GetValue(NameProperty); }[m
+[32m+[m[32m            set { SetValue(NameProperty, value); }[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        // Using a DependencyProperty as the backing store for Name.  This enables animation, styling, binding, etc...[m
+[32m+[m[32m        public static readonly DependencyProperty NameProperty =[m
+[32m+[m[32m            DependencyProperty.Register("Name", typeof(string), typeof(Console), new PropertyMetadata(null));[m
+[32m+[m
+[32m+[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/XboxLibrary/XboxLibrary.csproj b/XboxLibrary/XboxLibrary.csproj[m
+[1mindex f6c734a..660ab6b 100644[m
+[1m--- a/XboxLibrary/XboxLibrary.csproj[m
+[1m+++ b/XboxLibrary/XboxLibrary.csproj[m
+[36m@@ -132,6 +132,7 @@[m
+     <Compile Include="ColorPickerFlyout.xaml.cs">[m
+       <DependentUpon>ColorPickerFlyout.xaml</DependentUpon>[m
+     </Compile>[m
+[32m+[m[32m    <Compile Include="Console.cs" />[m
+     <Compile Include="DataLibrary.cs" />[m
+     <Compile Include="DateToStringConverter.cs" />[m
+     <Compile Include="EditSingleItem.xaml.cs">[m
